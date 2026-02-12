@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bult Hand Gangster - Family Operations</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #d4d4d4;
+            line-height: 1.6;
+            padding: 20px;
+            background-image: linear-gradient(45deg, #1a1a1a 25%, #0d0d0d 25%, #0d0d0d 50%, #1a1a1a 50%, #1a1a1a 75%, #0d0d0d 75%, #0d0d0d 100%);
+            background-size: 56.57px 56.57px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(20, 20, 20, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+            border: 2px solid #8b7355;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #8b7355;
+            padding-bottom: 20px;
+        }
+        
+        h1, h2, h3 {
+            color: #ffd700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            border-right: 3px solid #8b7355;
+            padding-right: 20px;
+        }
+        
+        .loot-total {
+            background: #2a2a2a;
+            padding: 15px 25px;
+            border-radius: 10px;
+            border: 2px solid #ffd700;
+        }
+        
+        .loot-amount {
+            font-size: 2em;
+            color: #00ff00;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .gangster-card, .contract-card {
+            background: #1e1e1e;
+            border: 1px solid #8b7355;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .gangster-card:hover, .contract-card:hover {
+            border-color: #ffd700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .gangster-name {
+            color: #ffd700;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .role {
+            color: #8b7355;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #8b7355;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-label {
+            font-size: 0.8em;
+            color: #888;
+        }
+        
+        .stat-value {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        
+        .contract-difficulty {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .difficulty-easy {
+            background: #4caf50;
+            color: black;
+        }
+        
+        .difficulty-medium {
+            background: #ff9800;
+            color: black;
+        }
+        
+        .difficulty-hard {
+            background: #f44336;
+            color: white;
+        }
+        
+        button {
+            background: #8b7355;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background: #ffd700;
+            color: black;
+            transform: scale(1.05);
+        }
+        
+        .form-container {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 2px solid #8b7355;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background: #1e1e1e;
+            border: 1px solid #8b7355;
+            color: white;
+            border-radius: 5px;
+        }
+        
+        .danger-level {
+            color: #ff6b6b;
+        }
+        
+        .success-rate {
+            color: #51cf66;
+        }
+        
+        .assign-btn {
+            background: #ffd700;
+            color: black;
+            margin-left: 10px;
+        }
+        
+        .delete-btn {
+            background: #dc3545;
+            margin-left: 10px;
+        }
+        
+        .delete-btn:hover {
+            background: #ff4444;
+            color: white;
+        }
+        
+        .gangster-stats {
+            margin-top: 20px;
+        }
+        
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #8b7355;
+            border-top: 1px solid #8b7355;
+            padding-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            h1 {
+                border-right: none;
+                padding-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚜️ BULT HAND GANGSTER ⚜️</h1>
+            <div class="loot-total">
+                <span style="color: #8b7355;">Family Loot:</span>
+                <span class="loot-amount">${{ total_loot|default(0)|int }}</span>
+            </div>
+        </header>
+        
+        <div class="grid">
+            <!-- Left Column - Gangsters -->
+            <div>
+                <h2>👥 OUR FAMILY</h2>
+                
+                <!-- Add Gangster Form -->
+                <div class="form-container">
+                    <h3>RECRUIT NEW SOLDIER</h3>
+                    <input type="text" id="gangster-name" placeholder="Name" required>
+                    <input type="text" id="gangster-role" placeholder="Role (Boss, Enforcer, etc.)" required>
+                    <input type="text" id="gangster-weapon" placeholder="Weapon of Choice" required>
+                    <input type="number" id="gangster-reputation" placeholder="Reputation (1-100)" min="1" max="100">
+                    <button onclick="addGangster()">🔫 RECRUIT</button>
+                </div>
+                
+                <!-- Gangsters List -->
+                <div id="gangsters-list">
+                    {% for gangster in gangsters %}
+                    <div class="gangster-card" id="gangster-{{ gangster.id }}">
+                        <div class="gangster-name">{{ gangster.name }}</div>
+                        <div class="role">{{ gangster.role }} • {{ gangster.weapon }}</div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Reputation: <span style="color: #ffd700;">{{ gangster.reputation }}/100</span></span>
+                            <span>Contracts: <span style="color: #51cf66;">{{ gangster.contracts_completed }}</span></span>
+                        </div>
+                        
+                        {% if gangster_stats %}
+                            {% for stats in gangster_stats %}
+                                {% if stats.name == gangster.name %}
+                                <div class="gangster-stats">
+                                    <div style="display: flex; gap: 10px; font-size: 0.9em;">
+                                        <span class="success-rate">✓ Success: {{ stats.success_rate }}%</span>
+                                        <span class="danger-level">⚠️ Danger: {{ stats.danger_level }}</span>
+                                        <span>💰 Value: ${{ stats.family_value }}</span>
+                                        <span>📊 {{ stats.status }}</span>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        
+                        <button class="delete-btn" onclick="deleteGangster({{ gangster.id }})">❌ BANISH</button>
+                    </div>
+                    {% else %}
+                    <p>No gangsters in the family yet. Time to recruit!</p>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Right Column - Contracts -->
+            <div>
+                <h2>💀 ACTIVE CONTRACTS</h2>
+                
+                <!-- Add Contract Form -->
+                <div class="form-container">
+                    <h3>NEW CONTRACT</h3>
+                    <input type="text" id="contract-target" placeholder="Target/Business" required>
+                    <input type="number" id="contract-reward" placeholder="Reward $" required>
+                    <select id="contract-difficulty">
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                    <button onclick="addContract()">📜 ADD CONTRACT</button>
+                </div>
+                
+                <!-- Contracts List -->
+                <div id="contracts-list">
+                    {% for contract in contracts %}
+                    <div class="contract-card" id="contract-{{ contract.id }}">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span class="gangster-name">🎯 {{ contract.target }}</span>
+                            <span style="color: #00ff00;">💰 ${{ contract.reward }}</span>
+                        </div>
+                        
+                        <span class="contract-difficulty difficulty-{{ contract.difficulty|lower }}">
+                            {{ contract.difficulty }}
+                        </span>
+                        
+                        <div style="margin-top: 15px; display: flex; align-items: center;">
+                            <select id="assign-{{ contract.id }}" style="flex-grow: 1; margin-right: 10px;">
+                                <option value="">Assign to...</option>
+                                {% for gangster in gangsters %}
+                                <option value="{{ gangster.id }}">{{ gangster.name }} (Rep: {{ gangster.reputation }})</option>
+                                {% endfor %}
+                            </select>
+                            <button class="assign-btn" onclick="assignContract({{ contract.id }})">✅ ASSIGN</button>
+                            <button class="delete-btn" onclick="deleteContract({{ contract.id }})">❌ DELETE</button>
+                        </div>
+                    </div>
+                    {% else %}
+                    <p>No active contracts. Check back later.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>⚜️ BULT HAND GANGSTER FAMILY OPERATIONS • MADE AN OFFER YOU CAN'T REFUSE ⚜️</p>
+            <p style="font-size: 0.8em; margin-top: 10px;">© 2024 - All rights reserved • Keep your friends close, your enemies closer</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Add a new gangster
+        function addGangster() {
+            const name = document.getElementById('gangster-name').value;
+            const role = document.getElementById('gangster-role').value;
+            const weapon = document.getElementById('gangster-weapon').value;
+            const reputation = document.getElementById('gangster-reputation').value || 50;
+            
+            if (!name || !role || !weapon) {
+                alert('Fill in all fields, capisce?');
+                return;
+            }
+            
+            fetch('/api/gangsters', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({name, role, weapon, reputation: parseInt(reputation)})
+            })
+            .then(response => response.json())
+            .then(() => location.reload());
+        }
+        
+        // Add a new contract
+        function addContract() {
+            const target = document.getElementById('contract-target').value;
+            const reward = document.getElementById('contract-reward').value;
+            const difficulty = document.getElementById('contract-difficulty').value;
+            
+            if (!target || !reward) {
+                alert('Fill in all fields, capisce?');
+                return;
+            }
+            
+            fetch('/api/contracts', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({target, reward: parseInt(reward), difficulty})
+            })
+            .then(response => response.json())
+            .then(() => location.reload());
+        }
+        
+        // Assign contract to gangster
+        function assignContract(contractId) {
+            const select = document.getElementById(`assign-${contractId}`);
+            const gangsterId = select.value;
+            
+            if (!gangsterId) {
+                alert('Pick a soldier for this job!');
+                return;
+            }
+            
+            fetch(`/api/contracts/${contractId}/assign`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({gangster_id: parseInt(gangsterId)})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(`Contract completed! Loot collected: $${data.loot}`);
+                    location.reload();
+                } else {
+                    alert('Failed to assign contract');
+                }
+            });
+        }
+        
+        // Delete gangster
+        function deleteGangster(gangsterId) {
+            if (confirm('Banish this soldier from the family?')) {
+                fetch(`/api/gangsters/${gangsterId}`, {method: 'DELETE'})
+                .then(() => location.reload());
+            }
+        }
+        
+        // Delete contract
+        function deleteContract(contractId) {
+            if (confirm('Cancel this contract?')) {
+                fetch(`/api/contracts/${contractId}`, {method: 'DELETE'})
+                .then(() => location.reload());
+            }
+        }
+    </script>
+</body>
+</html>
